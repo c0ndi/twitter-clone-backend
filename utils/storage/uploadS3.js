@@ -13,7 +13,7 @@ const s3Config = {
 
 const client = new S3Client(s3Config);
 
-export function uploadS3Controller(file) {
+export function uploadS3(file) {
    if (file) {
       const {name, data} = file;
 

@@ -12,7 +12,7 @@ const s3Config = {
 };
 
 const client = new S3Client(s3Config);
-export async function readS3Controller() {
+export async function readS3() {
    const command = new ListObjectsV2Command({
       Bucket: process.env.BUCKET,
       MaxKeys: 999,

@@ -1,9 +1,9 @@
-import {uploadS3Controller} from "../../controllers/uploadS3.controller.js";
+import {uploadS3} from "../storage/uploadS3.js";
 import {getS3ObjectUrl} from "../storage/getS3ObjectUrl.js";
 import Post from "../../schemas/post.schema.js";
 
 export async function addPostWithPhoto(res, author, title, content, file) {
-   const {response, fileKey} = uploadS3Controller(file);
+   const {response, fileKey} = uploadS3(file);
 
    try {
       const s3Response = await response;
@@ -25,7 +25,7 @@ export async function addPostWithPhoto(res, author, title, content, file) {
          } catch (err) {
             console.log(err)
 
-            res.status(500).json({isError: true, message: "Something went wrong"});
+            res.status(500).json({isError: true, message: "Cannot create post"});
          }
       }
    } catch (err) {

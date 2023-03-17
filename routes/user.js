@@ -13,7 +13,7 @@ router.get(
 
          res.status(200).json({isError: false, message: "Users found", user});
       } catch (err) {
-         throw new Error("User not found");
+         res.status(500).json({isError: true, message: "Users not found"});
       }
    });
 
@@ -26,7 +26,7 @@ router.get(
 
          res.status(200).json({isError: false, message: "User found", user});
       } catch (err) {
-         throw new Error("User not found");
+         res.status(500).json({isError: true, message: "Users not found"});
       }
    })
 
@@ -36,7 +36,7 @@ router.get('/all', async (req, res) => {
 
       res.status(200).json({isError: false, message: "Users found", users});
    } catch (err) {
-      throw new Error("Users not found");
+      res.status(500).json({isError: true, message: "Users not found"});
    }
 });
 

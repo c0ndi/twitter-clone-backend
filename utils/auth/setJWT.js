@@ -10,7 +10,7 @@ const generateAccesstoken = (data) => {
    );
 };
 
-export const loginUser = (res, user) => {
+export const setJWT = (res, user) => {
    const {name, email, _id} = user;
 
    const accessToken = generateAccesstoken({_id: user._id});

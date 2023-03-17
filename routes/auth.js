@@ -5,7 +5,7 @@ import {registerAuth} from "../middlewares/auth/registerAuth.js";
 import {handleValidator} from "../middlewares/handleValidator.js";
 import bcrypt, {compare} from "bcrypt";
 import User from "../schemas/user.schema.js";
-import {loginUser} from "../utils/auth/loginUser.js";
+import {setJWT} from "../utils/auth/setJWT.js";
 
 const router = Router();
 
@@ -34,7 +34,7 @@ router.post(
          res.status(200).json({isError: false, message: "User created successfully"});
       } catch (err) {
          console.error(err);
-         res.status(500).json({isError: true, message: "Something went wrong"});
+         res.status(500).json({isError: true, message: "Cannot register user"});
       }
    })
 
@@ -57,7 +57,7 @@ router.post(
          return res.status(403).json({isError: true, message: "Incorrect password"});
       }
 
-      loginUser(res, user);
+      setJWT(res, user);
    })
 
 export default router;
