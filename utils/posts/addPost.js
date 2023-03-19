@@ -1,9 +1,9 @@
 import Post from "../../schemas/post.schema.js";
 
-export async function addPost(res, author, title, content) {
+export async function addPost(res, authorId, authorName, content) {
    const post = new Post({
-      author,
-      title,
+      authorId,
+      authorName,
       content,
    })
 
@@ -13,6 +13,7 @@ export async function addPost(res, author, title, content) {
       res.status(200).json({isError: false, message: "Post created successfully"});
    } catch (err) {
       console.log(err)
-      res.status(500).json({isError: true, message: "Cannot add post"});
+
+      res.status(500).json({isError: true, message: "Cannot save post"});
    }
 }

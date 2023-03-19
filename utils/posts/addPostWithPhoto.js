@@ -2,7 +2,7 @@ import {uploadS3} from "../storage/uploadS3.js";
 import {getS3ObjectUrl} from "../storage/getS3ObjectUrl.js";
 import Post from "../../schemas/post.schema.js";
 
-export async function addPostWithPhoto(res, author, title, content, file) {
+export async function addPostWithPhoto(res, authorId, authorName, content, file) {
    const {response, fileKey} = uploadS3(file);
 
    try {
@@ -12,8 +12,8 @@ export async function addPostWithPhoto(res, author, title, content, file) {
          const photo = getS3ObjectUrl(fileKey);
 
          const post = new Post({
-            author,
-            title,
+            authorId,
+            authorName,
             content,
             photo,
          })
@@ -21,11 +21,11 @@ export async function addPostWithPhoto(res, author, title, content, file) {
          try {
             await post.save();
 
-               res.status(200).json({isError: false, message: "Post created successfully"});
+            res.status(200).json({isError: false, message: "Post created successfully"});
          } catch (err) {
             console.log(err)
 
-            res.status(500).json({isError: true, message: "Cannot create post"});
+            res.status(500).json({isError: true, message: "Cannot save post"});
          }
       }
    } catch (err) {

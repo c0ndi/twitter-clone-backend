@@ -1,12 +1,12 @@
 import {model, Schema} from "mongoose";
 
 const Post = new Schema({
-   author: {
+   authorId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
    },
-   title: {
+   authorName: {
       type: String,
       required: true,
    },
