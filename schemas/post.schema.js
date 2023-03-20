@@ -19,8 +19,8 @@ const Post = new Schema({
       type: String,
    },
    likes: {
-      type: Number,
-      default: 0,
+      type: Array,
+      default: [],
    },
    comments: {
       type: Array,

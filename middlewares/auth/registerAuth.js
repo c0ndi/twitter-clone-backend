@@ -5,8 +5,8 @@ export const registerAuth = async (req, res, next) => {
 
    const user = await User.find({ $or: [{email}, {name}] });
 
-   if(user) {
-      res.status(400).json({isError: true, message: "User already exists"});
+   if(user.length > 0) {
+      return res.status(409).json({isError: true, message: "User already exists"});
    }
 
    next();

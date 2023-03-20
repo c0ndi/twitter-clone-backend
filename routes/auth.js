@@ -13,7 +13,7 @@ router.post(
    '/register',
    isAuthorized("auth"),
    body("email").isEmail(),
-   body("name").isString().isLength({min: 5, max: 20}),
+   body("name").isString().isLength({min: 3, max: 20}),
    body("password").isString().isLength({min: 6}).matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
    registerAuth,
    handleValidator,

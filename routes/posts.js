@@ -12,21 +12,71 @@ const router = Router();
 router.get("/", async (req, res) => {
    try {
       const posts = await Post.find({}, {}, {sort: {createdAt: -1}});
+      console.log(posts)
 
       res.status(200).json({isError: false, posts});
    } catch (err) {
       console.log(err)
+
       res.status(500).json({isError: true, message: "Cannot get posts"});
    }
 })
 
 router.post(
-   '/',
-   body("content").isString().isLength({min: 1, max: 250}).trim(),
-   handleValidator,
+   '/like/:id',
    isAuthorized("no-auth"),
    async (req, res) => {
-      const {title, content} = req.body;
+
+   try {
+      const postToLike = await Post.findOne({_id: req.params.id});
+
+      if(postToLike.likes.includes(req.user._id)) {
+         await Post.findOneAndUpdate({_id: req.params.id}, {$pull: {likes: req.user._id}});
+
+         res.status(200).json({isError: false, message: "Post unliked"});
+         return;
+      }
+
+      await Post.findOneAndUpdate({_id: req.params.id}, {$push: {likes: req.user._id}});
+
+      res.status(200).json({isError: false, message: "Post liked"});
+   } catch (err) {
+      console.log(err)
+
+      res.status(500).json({isError: true, message: "Cannot like post"});
+   }
+})
+
+router.post(
+   '/comment/:_id',
+   isAuthorized("no-auth"),
+   body("comment").isEmpty().isLength({min: 1, max: 125}),
+   async (req, res) => {
+      const {_id} = req.params;
+      const {comment} = req.body;
+
+      try {
+         const postToComment = await Post.find({_id});
+
+         if (!postToComment) res.send(404).json({isError: true, message: "Post not found"});
+
+         await postToComment.update({$push: {comments: comment}});
+
+         res.status(200).json({isError: false, message: "Post liked"});
+      } catch (err) {
+         console.log(err)
+
+         res.status(500).json({isError: true, message: "Cannot comment"});
+      }
+   })
+
+router.post(
+   '/',
+   isAuthorized("no-auth"),
+   body("content").isString().isLength({min: 1, max: 2000}).trim(),
+   handleValidator,
+   async (req, res) => {
+      const {content} = req.body;
       const authorId = req.user._id;
 
       try {

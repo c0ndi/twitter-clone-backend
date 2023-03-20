@@ -14,6 +14,8 @@ import {decodeUser} from "./middlewares/auth/decodeUser.js";
 
 const app = express()
 
+config();
+
 app.use(cookieParser());
 app.use(decodeUser);
 app.use(morgan("dev"))
@@ -23,8 +25,6 @@ app.use(fileUpload({
    limits: {fileSize: 50 * 1024 * 1024},
 }));
 app.use(express.urlencoded({extended: true}));
-
-config();
 
 const port = process.env.PORT;
 

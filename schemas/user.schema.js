@@ -16,6 +16,10 @@ const UserSchema = new Schema({
    createdAt: {
       type: Date,
       default: Date.now,
+   },
+   likedPosts: {
+      type: Array,
+      default: [],
    }
 })
 
