@@ -12,9 +12,22 @@ const router = Router();
 router.get("/", async (req, res) => {
    try {
       const posts = await Post.find({}, {}, {sort: {createdAt: -1}});
-      console.log(posts)
 
       res.status(200).json({isError: false, posts});
+   } catch (err) {
+      console.log(err)
+
+      res.status(500).json({isError: true, message: "Cannot get posts"});
+   }
+})
+
+router.get("/:_id", async (req, res) => {
+   const {_id} = req.params;
+
+   try {
+      const post = await Post.findOne({_id});
+
+      res.status(200).json({isError: false, post});
    } catch (err) {
       console.log(err)
 
@@ -56,13 +69,10 @@ router.post(
       const {comment} = req.body;
 
       try {
-         const postToComment = await Post.find({_id});
+         const user = await User.findOne({_id: req.user._id});
+         await Post.findOneAndUpdate({_id}, {$push: {comments: {user, content: comment}}});
 
-         if (!postToComment) res.send(404).json({isError: true, message: "Post not found"});
-
-         await postToComment.update({$push: {comments: comment}});
-
-         res.status(200).json({isError: false, message: "Post liked"});
+         res.status(200).json({isError: false, message: "Post commented", comment: {user, content: comment}});
       } catch (err) {
          console.log(err)
 
