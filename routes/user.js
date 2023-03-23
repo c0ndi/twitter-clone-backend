@@ -1,6 +1,7 @@
 import {Router} from "express";
 import User from "../schemas/user.schema.js";
 import {isAuthorized} from "../middlewares/auth/isAuthorized.js";
+import { addUserPicture} from "../utils/user/addUserPicture.js";
 
 const router = Router();
 
@@ -27,6 +28,23 @@ router.get(
          res.status(200).json({isError: false, message: "User found", user});
       } catch (err) {
          res.status(500).json({isError: true, message: "Users not found"});
+      }
+   })
+
+router.post(
+   '/picture',
+   isAuthorized("no-auth"),
+   async (req, res) => {
+      const {type} = req.body;
+      const { _id } = req.user;
+
+      try {
+         if(req.files)
+            await addUserPicture(res, _id, req.files.photo, type)
+      } catch (err) {
+         console.log(err)
+
+         res.status(500).json({isError: true, message: "Cannot save a photo"})
       }
    })
 

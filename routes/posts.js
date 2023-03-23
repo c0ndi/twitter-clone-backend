@@ -63,7 +63,7 @@ router.post(
 router.post(
    '/comment/:_id',
    isAuthorized("no-auth"),
-   body("comment").isEmpty().isLength({min: 1, max: 125}),
+   body("comment").isEmpty().isLength({min: 1, max: 250}),
    async (req, res) => {
       const {_id} = req.params;
       const {comment} = req.body;
@@ -83,7 +83,7 @@ router.post(
 router.post(
    '/',
    isAuthorized("no-auth"),
-   body("content").isString().isLength({min: 1, max: 2000}).trim(),
+   body("content").isString().isLength({min: 1, max: 9999}).trim(),
    handleValidator,
    async (req, res) => {
       const {content} = req.body;

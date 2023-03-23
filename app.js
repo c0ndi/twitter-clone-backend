@@ -8,7 +8,6 @@ import postRouter from './routes/posts.js';
 import cors from 'cors';
 import morgan from 'morgan';
 import fileUpload from 'express-fileupload';
-import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import {decodeUser} from "./middlewares/auth/decodeUser.js";
 

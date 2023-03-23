@@ -17,9 +17,11 @@ const UserSchema = new Schema({
       type: Date,
       default: Date.now,
    },
-   likedPosts: {
-      type: Array,
-      default: [],
+   profilePicture: {
+      type: String,
+   },
+   backgroundPicture: {
+      type: String,
    }
 })
 
