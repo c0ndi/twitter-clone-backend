@@ -19,9 +19,11 @@ const UserSchema = new Schema({
    },
    profilePicture: {
       type: String,
+      default: "",
    },
    backgroundPicture: {
       type: String,
+      default: "",
    }
 })
 

@@ -64,6 +64,7 @@ router.post(
    '/comment/:_id',
    isAuthorized("no-auth"),
    body("comment").isEmpty().isLength({min: 1, max: 250}),
+   handleValidator,
    async (req, res) => {
       const {_id} = req.params;
       const {comment} = req.body;
@@ -90,15 +91,12 @@ router.post(
       const authorId = req.user._id;
 
       try {
-         const user = await User.findOne({_id: authorId});
-         const authorName = user.name;
-
          if (req.files) {
-            await addPostWithPhoto(res, authorId, authorName, content, req.files.photo);
+            await addPostWithPhoto(res, authorId, content, req.files.photo);
             return;
          }
 
-         await addPost(res, authorId, authorName, content);
+         await addPost(res, authorId, content);
       } catch (err) {
          console.log(err)
 

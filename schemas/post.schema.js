@@ -6,8 +6,8 @@ const Post = new Schema({
       ref: 'User',
       required: true,
    },
-   authorName: {
-      type: String,
+   author: {
+      type: Object,
       required: true,
    },
    content: {
