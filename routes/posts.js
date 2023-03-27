@@ -63,7 +63,7 @@ router.post(
 router.post(
    '/comment/:_id',
    isAuthorized("no-auth"),
-   body("comment").isEmpty().isLength({min: 1, max: 250}),
+   body("comment").isLength({min: 1, max: 250}),
    handleValidator,
    async (req, res) => {
       const {_id} = req.params;
