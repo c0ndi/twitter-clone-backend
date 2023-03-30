@@ -22,7 +22,7 @@ export const setJWT = (res, user) => {
 
    res.cookie("access_token", accessToken, {
       httpOnly: true,
-      secure: true,
+      secure: false,
       sameSite: "none",
       path: "/",
       maxAge: 1000 * 60 * 60 * 24 * 7,

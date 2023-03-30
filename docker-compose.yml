@@ -1,7 +1,8 @@
 version: "3"
 services:
   backend:
-    image: backend
+    image: c0ndi/twitter-clone-backend:latest
+    container_name: backend
     ports:
       - 8080:8080
     environment:
