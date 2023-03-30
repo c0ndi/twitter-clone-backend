@@ -1,7 +1,6 @@
 import express, {json, Router} from 'express';
 import {config} from 'dotenv';
 import {connect} from 'mongoose';
-import photoRouter from './routes/photo.js';
 import userRouter from './routes/user.js';
 import authRouter from './routes/auth.js';
 import postRouter from './routes/posts.js';
@@ -25,7 +24,7 @@ app.use(fileUpload({
 }));
 app.use(express.urlencoded({extended: true}));
 
-const port = process.env.PORT;
+const port = 8080;
 
 connect(process.env.DB).then(() => {
    app.listen(port, () => console.log(`Server running on port: ${port}`))
@@ -33,7 +32,6 @@ connect(process.env.DB).then(() => {
    console.log(e);
 });
 
-app.use('/photo', photoRouter);
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
 app.use('/posts', postRouter);

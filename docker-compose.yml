@@ -1,0 +1,25 @@
+version: "3"
+services:
+  backend:
+    image: backend
+    ports:
+      - 8080:8080
+    environment:
+      - FRONTEND_URL=
+      - DB=mongodb://mongo:27017/twitter-app
+      #AWS
+      - BUCKET=
+      - REGION=
+      - ACCESS_KEY=
+      - SECRET_ACCESS_KEY=
+      #JWT
+      - TOKEN_SECRET=
+    links:
+      - mongo
+    depends_on:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
