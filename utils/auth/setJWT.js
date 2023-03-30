@@ -21,7 +21,7 @@ export const setJWT = (res, user) => {
    };
 
    res.cookie("access_token", accessToken, {
-      httpOnly: false,
+      httpOnly: true,
       secure: true,
       sameSite: "none",
       path: "/",
